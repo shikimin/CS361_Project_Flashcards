@@ -63,6 +63,9 @@ def extra_add_options(db, cursor, user_input_front, user_input_back):
                 db.commit()
                 
                 print("Undo successful!")
+                # return to add menu to avoid repeated deletion
+                break
+
             
             elif add_command == "!redo":
                 SQL_insert = "INSERT INTO cards (card_front, card_back) VALUES (%s, %s)"
