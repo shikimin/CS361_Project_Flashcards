@@ -1,8 +1,13 @@
 import mysql.connector
 import os
-from add import *
+import add
+import overview
+import history
 
 def main(db, cursor):
+    # create log to track actions
+    action_log = ActionLog()
+
     # Intro message
     while True:
         main_menu = """\nMAIN MENU:
@@ -16,16 +21,16 @@ def main(db, cursor):
         print(main_menu)
         main_menu_command = input_verification("!add", "!overview", "!docs", "!helpme", "!history")
         if main_menu_command == "!add":
-            add_cards(db, cursor)
+            add.add_cards(db, cursor, action_log)
             continue
         elif main_menu_command == "!overview":
-            overview()
+            overview.card_overview(cursor)
         elif main_menu_command == "!docs":
-            docs()
+            os.system('start cmd /k python docs.py')
         elif main_menu_command == "!helpme":
-            helpme()
+            os.system('start cmd /k python helpme.py')
         elif main_menu_command == "!history":
-            history()
+            history.check_history(action_log)
 
 def input_verification(*args):
     while True:
@@ -36,15 +41,24 @@ def input_verification(*args):
             print("Invalid input. Please try again.")
             continue
 
-def overview():
-    pass
-def docs():
-    pass
-def helpme():
-    pass
-def history():
-    pass
+class ActionLog():
+    def __init__(self):
+        self.log = []
+    
+    def add(self, action, card_front, card_back):
+        # keep max length of action log at 5
+        if len(self.log) == 5:
+            self.remove()
 
+        action_desc = action + ": " + card_front + " // " + card_back
+        self.log.append(action_desc)
+
+    def remove(self):
+        self.log.pop(0)
+    
+    def get(self):
+        return self.log
+ 
 
 if __name__ == '__main__':
     # print welcome message
