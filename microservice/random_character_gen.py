@@ -1,7 +1,6 @@
 import requests
 import time
 import random
-import json
 
 while True:
     time.sleep(5)
