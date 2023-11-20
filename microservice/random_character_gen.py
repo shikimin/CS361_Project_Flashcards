@@ -18,22 +18,11 @@ while True:
                     perPage
                     lastPage
                     }
-                    
                     characters (sort: FAVOURITES_DESC) { 
                     id
                     name { 
                         full
                     }
-                    favourites
-                    gender
-                    dateOfBirth {
-                        month
-                        day
-                    }
-                    age
-                    description
-                    }
-                    
                 }
                 }
         '''
