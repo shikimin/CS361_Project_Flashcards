@@ -14,17 +14,18 @@ while True:
             query ($page: Int, $perPage: Int) {
                 Page(page: $page, perPage: $perPage) {
                     pageInfo {
-                    total
-                    perPage
-                    lastPage
+                        total
+                        perPage
+                        lastPage
                     }
                     characters (sort: FAVOURITES_DESC) { 
-                    id
-                    name { 
-                        full
+                        id
+                        name { 
+                            full
+                        }
                     }
                 }
-                }
+            }
         '''
 
         variables = {
