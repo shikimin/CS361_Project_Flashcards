@@ -17,14 +17,14 @@ def card_overview(cursor):
             print(count, ". ", card[1], " // ", card[2])
             if count % 10 == 0:
                 print("\nEnter Y to see the next 10 flashcards. Enter N to return to main menu.")
-                view_more = main.input_verification("Y","N")
+                view_more = main.Main.input_verification(main.Main, ["Y", "N"])
                 if view_more == "Y":
                     continue
                 else:
                     break
 
         print("\nThere are no more cards to view. Enter Y to see the flashcards from the beginning again. Enter N to return to main menu.")
-        view_more = main.input_verification("Y","N")
+        view_more = main.Main.input_verification(main.Main, ["Y", "N"])
         if view_more == "Y":
                     continue
         else:

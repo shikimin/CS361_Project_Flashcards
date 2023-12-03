@@ -4,42 +4,54 @@ import add
 import overview
 import history
 
-def main(db, cursor):
-    # create log to track actions
-    action_log = ActionLog()
+class Main:
+    def __init__(self, db, cursor) -> None:
+        # create log to track actions
+        self.action_log = ActionLog()
+        self.db = db
+        self.cursor = cursor
 
-    # Intro message
-    while True:
-        main_menu = """\nMAIN MENU:
-    - Enter one of the commands below:
-            !add : add new flashcards to use in quizzes (Manual Entry)
-            !overview : view all entered flashcards
-            !docs : view documentation in a new window
-            !helpme : view frequently asked questions
-            !history : view last 5 actions made in this session
-        """
-        print(main_menu)
-        main_menu_command = input_verification("!add", "!overview", "!docs", "!helpme", "!history")
-        if main_menu_command == "!add":
-            add.add_cards(db, cursor, action_log)
-            continue
-        elif main_menu_command == "!overview":
-            overview.card_overview(cursor)
-        elif main_menu_command == "!docs":
-            os.system('start cmd /k python docs.py')
-        elif main_menu_command == "!helpme":
-            os.system('start cmd /k python helpme.py')
-        elif main_menu_command == "!history":
-            history.check_history(action_log)
+    def start(self):
+        # Intro message
+        while True:
+            main_menu = """\nMAIN MENU:
+        - Enter one of the commands below:
+                !add : add new flashcards to use in quizzes (Manual Entry)
+                !overview : view all entered flashcards
+                !quiz : use your flashcards to quiz yourself
+                !docs : view documentation in a new window
+                !helpme : view frequently asked questions
+                !history : view last 5 actions made in this session
+            """
+            print(main_menu)
 
-def input_verification(*args):
-    while True:
-        user_input = input()
-        if user_input in args:
-            return user_input
-        else:
-            print("Invalid input. Please try again.")
-            continue
+
+            options = ["!add", "!overview", "!quiz", "!docs", "!helpme", "!history"]
+            main_menu_command = self.input_verification(options)
+            self.commands(main_menu_command)
+
+    def commands(self, command):
+            if command == "!add":
+                add.add_cards(self.db, self.cursor, self.action_log)
+            elif command == "!overview":
+                overview.card_overview(self.cursor)
+            # elif command == "!quiz":
+            #     `````(self.cursor)
+            elif command == "!docs":
+                os.system('start cmd /k python docs.py')
+            elif command == "!helpme":
+                os.system('start cmd /k python helpme.py')
+            elif command == "!history":
+                history.check_history(self.action_log)
+
+    def input_verification(self, options):
+        while True:
+            user_input = input()
+            if user_input in options:
+                return user_input
+            else:
+                print("Invalid input. Please try again.")
+                continue
 
 class ActionLog():
     def __init__(self):
@@ -95,5 +107,6 @@ if __name__ == '__main__':
         cursor = db.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS Cards (card_id int NOT NULL AUTO_INCREMENT PRIMARY KEY, card_front VARCHAR(255), card_back VARCHAR(255))")
 
-        main(db, cursor)
+        main = Main(db, cursor)
+        main.start()
     

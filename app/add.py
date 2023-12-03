@@ -23,7 +23,7 @@ def add_cards(db, cursor, action_log):
         print("Front of card: ", user_input_front)
         print("Back of card: ", user_input_back)
         import main
-        confirmation = main.input_verification("Y","N")
+        confirmation = main.Main.input_verification(main.Main, ["Y", "N"])
 
         if confirmation == "N":
             continue
@@ -53,7 +53,7 @@ def extra_add_options(db, cursor, user_input_front, user_input_back, action_log)
         print(options)
         
         import main
-        add_command = main.input_verification("!add", "!undo", "!redo", "!main")
+        add_command = main.Main.input_verification(main.Main, ["!add", "!undo", "!redo", "!main"])
 
         if add_command == "!add":
             # return to add menu

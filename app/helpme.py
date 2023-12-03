@@ -22,7 +22,7 @@ while True:
         "4": """For any further questions, please contact shinminy@oregonstate.edu."""    
         }
     import main
-    chosen_q = main.input_verification("1", "2", "3", "4", "!helpme")
+    chosen_q = main.Main.input_verification(["1", "2", "3", "4", "!helpme"])
 
     if chosen_q == "!helpme":
         print(faq)

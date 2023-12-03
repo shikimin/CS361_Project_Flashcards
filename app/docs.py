@@ -20,7 +20,7 @@ while True:
         "3": """Redo and undo actions are offered immediately after adding a new card. Redo adds the most recently added card again, effectively duplicating the card in the database. Redo action can be done multiple times in a row. The undo action deletes the most recently added card in the database. After a successful undo, the program returns you to the top of the Add menu."""    
         }
     import main
-    chosen_topic = main.input_verification("1", "2", "3", "!topics")
+    chosen_topic = main.Main.input_verification(["1", "2", "3", "!topics"])
 
     if chosen_topic == "!topics":
         print(topics)
