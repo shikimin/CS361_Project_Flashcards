@@ -3,6 +3,7 @@ import os
 import add
 import overview
 import history
+import quiz
 
 class Main:
     def __init__(self, db, cursor) -> None:
@@ -25,7 +26,6 @@ class Main:
             """
             print(main_menu)
 
-
             options = ["!add", "!overview", "!quiz", "!docs", "!helpme", "!history"]
             main_menu_command = self.input_verification(options)
             self.commands(main_menu_command)
@@ -35,8 +35,10 @@ class Main:
                 add.add_cards(self.db, self.cursor, self.action_log)
             elif command == "!overview":
                 overview.card_overview(self.cursor)
-            # elif command == "!quiz":
-            #     `````(self.cursor)
+            elif command == "!quiz":
+                # start perm_server
+                os.system('start /min cmd /c python perm_server.pyw')
+                self.quiz()
             elif command == "!docs":
                 os.system('start cmd /k python docs.py')
             elif command == "!helpme":
@@ -52,6 +54,10 @@ class Main:
             else:
                 print("Invalid input. Please try again.")
                 continue
+
+    def quiz(self):
+        my_quiz = quiz.Quiz(self.cursor)
+        my_quiz.start()
 
 class ActionLog():
     def __init__(self):
@@ -73,6 +79,7 @@ class ActionLog():
  
 
 if __name__ == '__main__':
+    
     # print welcome message
     print("============================================")
     print("Welcome to FLASHCARDS!")

@@ -66,6 +66,9 @@ def extra_add_options(db, cursor, user_input_front, user_input_back, action_log)
             # delete last entered card
             SQL_undo = "DELETE FROM cards WHERE card_id=" + str(last_card[0])
             cursor.execute(SQL_undo)
+            # reset auto-increment on table
+            SQL_reset = "ALTER TABLE cards AUTO_INCREMENT =" + str(last_card[0])
+            cursor.execute(SQL_reset)
             db.commit()
             
             print("Undo successful!")
