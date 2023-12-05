@@ -37,7 +37,7 @@ class Main:
                 overview.card_overview(self.cursor)
             elif command == "!quiz":
                 # start perm_server
-                os.system('start /min cmd /c python perm_server.pyw')
+                os.system('start /min cmd /c python perm_server.py')
                 self.quiz()
             elif command == "!docs":
                 os.system('start cmd /k python docs.py')
