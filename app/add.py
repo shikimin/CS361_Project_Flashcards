@@ -28,10 +28,17 @@ def add_cards(db, cursor, action_log):
         if confirmation == "N":
             continue
         else:
+             # reset auto-increment on table
+            cursor.execute("SELECT MAX(card_id) FROM cards")
+            last_card = cursor.fetchone()
+            SQL_reset = "ALTER TABLE cards AUTO_INCREMENT =" + str(last_card[0])
+            cursor.execute(SQL_reset)
+
             # add entry to database
             SQL_insert = "INSERT INTO cards (card_front, card_back) VALUES (%s, %s)"
             insert_values = (user_input_front, user_input_back)
             cursor.execute(SQL_insert, insert_values)
+            
             db.commit()
             print("Flashcard has been added!")
 
@@ -63,12 +70,10 @@ def extra_add_options(db, cursor, user_input_front, user_input_back, action_log)
             # get id of last entered card
             cursor.execute("SELECT MAX(card_id) FROM cards")
             last_card = cursor.fetchone()
+
             # delete last entered card
             SQL_undo = "DELETE FROM cards WHERE card_id=" + str(last_card[0])
             cursor.execute(SQL_undo)
-            # reset auto-increment on table
-            SQL_reset = "ALTER TABLE cards AUTO_INCREMENT =" + str(last_card[0])
-            cursor.execute(SQL_reset)
             db.commit()
             
             print("Undo successful!")
