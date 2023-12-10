@@ -48,9 +48,9 @@ class Quiz:
                 return 1
             else:
                 print("Incorrect! Try again? (Y/N):")
-                try_again = main.Main.input_verification(main.Main, ["Y","N"])
+                try_again = main.Main.input_verification(main.Main, ["y","n"])
 
-                if try_again == "Y":
+                if try_again == "y":
                     continue
                 else:
                     return 0

@@ -16,13 +16,13 @@ while True:
 
 
     faq_answers = {
-        "1": """MySQL will have asked for a username and password upon installation. The default username provided is typically "root" while the password is one you choose yourself. To create a new user/password, please see https://dev.mysql.com/doc/refman/8.0/en/account-management-statements.html.""",
-        "2": """Stored cards can be viewed by entering !overview at the main menu. In MySQL, they are stored in the database named "my_flashcards".""",
-        "3": """Cards that were just added can be immediately deleted through the !undo function. A more general delete function will be coming soon.""",
-        "4": """For any further questions, please contact shinminy@oregonstate.edu."""    
+        1: """MySQL will have asked for a username and password upon installation. The default username provided is typically "root" while the password is one you choose yourself. To create a new user/password, please see https://dev.mysql.com/doc/refman/8.0/en/account-management-statements.html.""",
+        2: """Stored cards can be viewed by entering !overview at the main menu. In MySQL, they are stored in the database named "my_flashcards".""",
+        3: """Cards that were just added can be immediately deleted through the !undo function. A more general delete function will be coming soon.""",
+        4: """For any further questions, please contact shinminy@oregonstate.edu."""    
         }
     import main
-    chosen_q = main.Main.input_verification(["1", "2", "3", "4", "!helpme"])
+    chosen_q = main.Main.input_verification(main.Main, [1, 2, 3, 4, "!helpme"])
 
     if chosen_q == "!helpme":
         print(faq)

@@ -23,9 +23,9 @@ def add_cards(db, cursor, action_log):
         print("Front of card: ", user_input_front)
         print("Back of card: ", user_input_back)
         import main
-        confirmation = main.Main.input_verification(main.Main, ["Y", "N"])
+        confirmation = main.Main.input_verification(main.Main, ["y", "n"])
 
-        if confirmation == "N":
+        if confirmation == "n":
             continue
         else:
              # reset auto-increment on table
@@ -43,7 +43,7 @@ def add_cards(db, cursor, action_log):
             print("Flashcard has been added!")
 
             # add action to log
-            action_log.add("Added flashcard", user_input_front, user_input_back)
+            action_log.add("Add", [user_input_front, user_input_back])
 
             # offer additional options
             if extra_add_options(db, cursor, user_input_front, user_input_back, action_log) == "!main":
@@ -79,7 +79,7 @@ def extra_add_options(db, cursor, user_input_front, user_input_back, action_log)
             print("Undo successful!")
 
             # add action to log
-            action_log.add("Undo added flashcard", user_input_front, user_input_back)
+            action_log.add("Undo", [user_input_front, user_input_back])
 
             # return to add menu to avoid repeated deletion
             break
@@ -94,7 +94,7 @@ def extra_add_options(db, cursor, user_input_front, user_input_back, action_log)
             print("Redo successful!")
 
             # add action to log
-            action_log.add("Redo added flashcard", user_input_front, user_input_back)
+            action_log.add("Redo", [user_input_front, user_input_back])
 
         elif add_command == "!main":
             return "!main"

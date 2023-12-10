@@ -18,7 +18,7 @@ class Main:
             main_menu = """\nMAIN MENU:
         - Enter one of the commands below:
                 !add : ADD new flashcards to use in quizzes (Manual Entry)
-                !overview : view all entered flashcards // DELETE and/or UPDATE flashcards
+                **NEW!** !overview : view all entered flashcards // DELETE and/or UPDATE flashcards
                 !quiz : use your flashcards to QUIZ yourself
                 !docs : view documentation in a new window
                 !helpme : view frequently asked questions
@@ -62,7 +62,7 @@ class Main:
                 continue
 
     def overview(self):
-        my_overview = overview.Overview(self.cursor, self.db)
+        my_overview = overview.Overview(self.cursor, self.db, self.action_log)
         my_overview.card_overview()
 
     def quiz(self):
@@ -73,14 +73,24 @@ class ActionLog():
     def __init__(self):
         self.log = []
     
-    def add(self, action, card_front, card_back):
+    def add(self, action, items):
         # keep max length of action log at 5
         if len(self.log) == 5:
             self.remove()
 
-        action_desc = action + ": " + card_front + " // " + card_back
-        self.log.append(action_desc)
+        if action == "Add":
+            action_desc = "Added flashcard: " + items[0] + " // " + items[1]
+            
+        elif action == "Undo" or action == "Redo":
+            action_desc = action + " added flashcard: " + items[0] + " // " + items[1]
+        
+        elif action == "Delete":
+            action_desc = "Deleted card number " + str(items[0])
 
+        elif action == "Update":
+            action_desc = "Updated " + items[0] + " side(s) of card number " + str(items[1]) + " to: " + items[2] + " // " + items[3]
+
+        self.log.append(action_desc)
     def remove(self):
         self.log.pop(0)
     
