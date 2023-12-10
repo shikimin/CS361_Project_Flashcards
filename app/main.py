@@ -31,25 +31,28 @@ class Main:
             self.commands(main_menu_command)
 
     def commands(self, command):
-            if command == "!add":
-                add.add_cards(self.db, self.cursor, self.action_log)
-            elif command == "!overview":
-                self.overview()
-            elif command == "!quiz":
-                # start perm_server
-                os.system('start /min cmd /c python perm_server.py')
-                self.quiz()
-            elif command == "!docs":
-                os.system('start cmd /k python docs.py')
-            elif command == "!helpme":
-                os.system('start cmd /k python helpme.py')
-            elif command == "!history":
-                history.check_history(self.action_log)
+        # start functions depending on command
+        if command == "!add":
+            add.add_cards(self.db, self.cursor, self.action_log)
+        elif command == "!overview":
+            self.overview()
+        elif command == "!quiz":
+            # start perm_server
+            os.system('start /min cmd /c python perm_server.py')
+            self.quiz()
+        elif command == "!docs":
+            os.system('start cmd /k python docs.py')        # opens new window
+        elif command == "!helpme":
+            os.system('start cmd /k python helpme.py')
+        elif command == "!history":
+            history.check_history(self.action_log)
 
     def input_verification(self, options):
+        # check if user input is valid according to available options
         while True:
             user_input = input()
 
+            # for inputs that are digits vs alphabet
             if user_input.isdigit():
                 user_input = int(user_input)
             else:
@@ -70,6 +73,7 @@ class Main:
         my_quiz.start()
 
 class ActionLog():
+    # action log is a queue
     def __init__(self):
         self.log = []
     
@@ -78,19 +82,17 @@ class ActionLog():
         if len(self.log) == 5:
             self.remove()
 
+        # add actions to log depending on action type
         if action == "Add":
             action_desc = "Added flashcard: " + items[0] + " // " + items[1]
-            
         elif action == "Undo" or action == "Redo":
             action_desc = action + " added flashcard: " + items[0] + " // " + items[1]
-        
         elif action == "Delete":
             action_desc = "Deleted card number " + str(items[0])
-
         elif action == "Update":
             action_desc = "Updated " + items[0] + " side(s) of card number " + str(items[1]) + " to: " + items[2] + " // " + items[3]
-
         self.log.append(action_desc)
+
     def remove(self):
         self.log.pop(0)
     
@@ -132,7 +134,11 @@ if __name__ == '__main__':
             database="my_flashcards"
         )
         cursor = db.cursor()
-        cursor.execute("CREATE TABLE IF NOT EXISTS Cards (card_id int NOT NULL AUTO_INCREMENT PRIMARY KEY, card_front VARCHAR(255), card_back VARCHAR(255))")
+        cursor.execute("""CREATE TABLE IF NOT EXISTS Cards (
+            card_id int NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+            card_front VARCHAR(255), 
+            card_back VARCHAR(255)
+            )""")
 
         main = Main(db, cursor)
         main.start()
