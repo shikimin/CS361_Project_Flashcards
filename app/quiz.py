@@ -1,5 +1,4 @@
 import requests
-import json
 import main
 
 class Quiz:
@@ -12,11 +11,12 @@ class Quiz:
         print("Practice Quiz")
         print("============================================")
 
-        # get id of last entered card
+        # get total number of cards
         self.cursor.execute("SELECT MAX(card_id) FROM cards")
         max_num = self.cursor.fetchone()[0]
 
         sequence = self.get_sequence(max_num)
+        print(sequence)
         score = 0
 
         for num in sequence:
@@ -34,7 +34,6 @@ class Quiz:
     def get_sequence(self, max_num):
         url = 'http://localhost:8000/perm/?min=1&max=' + str(max_num)
         response = requests.get(url).json()
-        json_obj = json.dumps(response, indent=4, ensure_ascii=False).encode('utf8').decode()
         
         return response.get("perm")
 

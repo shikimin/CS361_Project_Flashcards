@@ -17,9 +17,9 @@ class Main:
         while True:
             main_menu = """\nMAIN MENU:
         - Enter one of the commands below:
-                !add : add new flashcards to use in quizzes (Manual Entry)
-                !overview : view all entered flashcards
-                !quiz : use your flashcards to quiz yourself
+                !add : ADD new flashcards to use in quizzes (Manual Entry)
+                !overview : view all entered flashcards // DELETE and/or UPDATE flashcards
+                !quiz : use your flashcards to QUIZ yourself
                 !docs : view documentation in a new window
                 !helpme : view frequently asked questions
                 !history : view last 5 actions made in this session
@@ -34,7 +34,7 @@ class Main:
             if command == "!add":
                 add.add_cards(self.db, self.cursor, self.action_log)
             elif command == "!overview":
-                overview.card_overview(self.cursor)
+                self.overview()
             elif command == "!quiz":
                 # start perm_server
                 os.system('start /min cmd /c python perm_server.py')
@@ -49,11 +49,21 @@ class Main:
     def input_verification(self, options):
         while True:
             user_input = input()
+
+            if user_input.isdigit():
+                user_input = int(user_input)
+            else:
+                user_input = user_input.lower()
+
             if user_input in options:
                 return user_input
             else:
                 print("Invalid input. Please try again.")
                 continue
+
+    def overview(self):
+        my_overview = overview.Overview(self.cursor, self.db)
+        my_overview.card_overview()
 
     def quiz(self):
         my_quiz = quiz.Quiz(self.cursor)
