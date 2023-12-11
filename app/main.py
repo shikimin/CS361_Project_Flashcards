@@ -33,7 +33,7 @@ class Main:
     def commands(self, command):
         # start functions depending on command
         if command == "!add":
-            add.add_cards(self.db, self.cursor, self.action_log)
+            self.add()
         elif command == "!overview":
             self.overview()
         elif command == "!quiz":
@@ -63,6 +63,10 @@ class Main:
             else:
                 print("Invalid input. Please try again.")
                 continue
+
+    def add(self):
+        add_new_cards = add.Add(self.cursor, self.db, self.action_log)
+        add_new_cards.add_cards()
 
     def overview(self):
         my_overview = overview.Overview(self.cursor, self.db, self.action_log)
