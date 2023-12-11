@@ -10,6 +10,7 @@ topics = """
     4. Deleting Cards
     5. Updating Cards
     6. Quizzing
+    7. Quiz Modes
     """
 print(topics)
 
@@ -42,7 +43,9 @@ while True:
         6: """The Quiz option takes all the cards in your database and displays the front of each card in random order.
             You must type in the contents of the back of the card in order to answer correctly. 
             If you answer incorrectly, you are given the option to try again or move on to the next card.
-            The total number of correctly answered cards is shown at the end."""   
+            The total number of correctly answered cards is shown at the end.""",
+        7: """There are currently 2 quiz modes: Basic and Personalized. The basic mode displays cards in random sequence.
+        The personalized mode allows you to choose cards you want to see more frequently than others."""   
         }
     import main
     chosen_topic = main.Main.input_verification(main.Main, [1, 2, 3, 4, 5, 6, "!topics"])

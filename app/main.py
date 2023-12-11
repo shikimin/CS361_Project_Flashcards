@@ -18,8 +18,8 @@ class Main:
             main_menu = """\nMAIN MENU:
         - Enter one of the commands below:
                 !add : ADD new flashcards to use in quizzes (Manual Entry)
-                **NEW!** !overview : view all entered flashcards // DELETE and/or UPDATE flashcards
-                !quiz : use your flashcards to QUIZ yourself
+                !overview : view all entered flashcards // DELETE and/or UPDATE flashcards **NEW!**
+                !quiz : use your flashcards to QUIZ yourself **NEW!**
                 !docs : view documentation in a new window
                 !helpme : view frequently asked questions
                 !history : view last 5 actions made in this session
@@ -69,7 +69,7 @@ class Main:
         my_overview.card_overview()
 
     def quiz(self):
-        my_quiz = quiz.Quiz(self.cursor)
+        my_quiz = quiz.Quiz(self.cursor, self.db)
         my_quiz.start()
 
 class ActionLog():
@@ -137,7 +137,8 @@ if __name__ == '__main__':
         cursor.execute("""CREATE TABLE IF NOT EXISTS Cards (
             card_id int NOT NULL AUTO_INCREMENT PRIMARY KEY, 
             card_front VARCHAR(255), 
-            card_back VARCHAR(255)
+            card_back VARCHAR(255),
+            recur CHAR(1)
             )""")
 
         main = Main(db, cursor)

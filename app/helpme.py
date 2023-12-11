@@ -22,8 +22,9 @@ while True:
         To create a new user/password, please see https://dev.mysql.com/doc/refman/8.0/en/account-management-statements.html.""",
         2: """Stored cards can be viewed by entering !overview at the main menu. In MySQL, they are stored in the database named "my_flashcards".""",
         3: """Cards that were just added can be immediately deleted through the !undo function. Older cards can be deleted through the Overview option.""",
-        4: """Currently, the only way you can update any card is through the !update feature in the Overview option where you can choose 
-        to update the front, back, or both sides of a chosen card.""",
+        4: """You can update the text that displays on the sides of cards is through the !update feature in the Overview option 
+        where you can choose to update the front, back, or both sides of a chosen card. The frequency of card display in quizzes can be updated
+        in the Quiz option.""",
         5: """For any further questions, please contact shinminy@oregonstate.edu."""    
         }
     import main
